@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Voice Bot — Personal Digital Twin</title>
+  <meta name="description" content="An interactive, universally user-friendly voicebot responding as an AI Digital Twin to life story, superpowers, and engineering questions with zero API key configuration.">
+  <meta name="keywords" content="voice bot, AI twin, conversational AI, speech recognition, web speech, speech synthesis">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Puter.js for Zero-Config Client-Side Free AI -->
+  <script src="https://js.puter.com/v2/"></script>
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'><path d='M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z'/><path d='M19 10v2a7 7 0 0 1-14 0v-2'/><line x1='12' x2='12' y1='19' y2='22'/></svg>">
+</head>
+<body>
+  <div class="app-background">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-avatar">
+          <span class="avatar-icon">🎙️</span>
+          <span class="status-dot"></span>
+        </div>
+        <div class="brand-info">
+          <h1 class="brand-title">PersonaVoice <span class="badge badge-accent">AI Twin</span></h1>
+          <p class="brand-subtitle" id="personaHeadline">Anurag’s Interactive Voice Bot</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btnPersonaEditor" class="btn btn-secondary" title="Customize Bio & Persona Answers">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span>Persona Settings</span>
+        </button>
+
+        <button id="btnVoiceSettings" class="btn btn-secondary" title="Voice & Audio Settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Audio</span>
+        </button>
+
+        <button id="btnInfoModal" class="btn btn-icon" title="Evaluator Guide & Instructions">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Info Banner for Evaluators -->
+    <div class="evaluator-banner">
+      <div class="banner-badge">✨ Instant Evaluation Ready</div>
+      <p class="banner-text">
+        <strong>Universal Zero-Setup:</strong> No API keys or installations required. Click the microphone to ask questions by voice, or click any sample question card below!
+      </p>
+    </div>
+
+    <!-- Main Workspace Grid -->
+    <main class="main-layout">
+      <!-- Left Column: Voice Visualizer Orb & Live Interaction -->
+      <section class="voice-centerpiece">
+        <!-- Visualizer Container -->
+        <div class="visualizer-wrapper">
+          <canvas id="orbCanvas" width="400" height="400"></canvas>
+          
+          <div class="orb-state-indicator" id="orbStateBadge">
+            <span class="pulse-ring"></span>
+            <span class="state-icon" id="stateIcon">⚡</span>
+            <span class="state-text" id="stateText">Ready to Talk</span>
+          </div>
+        </div>
+
+        <!-- Live Subtitles / Speech In Progress -->
+        <div class="live-subtitle-box" id="liveSubtitleBox">
+          <p class="subtitle-label" id="subtitleSpeaker">AI Voice Bot</p>
+          <p class="subtitle-content" id="subtitleContent">"Hello! I am ready to answer any questions about my life story, superpowers, growth areas, and how I push limits. Ask me anything!"</p>
+        </div>
+
+        <!-- Interactive Voice Controls -->
+        <div class="voice-controls-panel">
+          <div class="mic-button-wrapper">
+            <button id="btnToggleMic" class="btn-mic" aria-label="Toggle Microphone Voice Input">
+              <div class="mic-ripple" id="micRipple"></div>
+              <svg class="mic-svg" id="micSvg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+            </button>
+            <span class="mic-status-label" id="micStatusLabel">Click to Speak</span>
+          </div>
+
+          <!-- Secondary Audio Actions -->
+          <div class="audio-action-row">
+            <button id="btnStopVoice" class="btn-chip" title="Stop current voice playback" disabled>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+              <span>Stop Voice</span>
+            </button>
+            <button id="btnReplayVoice" class="btn-chip" title="Replay last spoken answer">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>Replay Audio</span>
+            </button>
+            <label class="toggle-chip" title="Automatically speak answers aloud">
+              <input type="checkbox" id="chkAutoSpeak" checked>
+              <span class="toggle-slider"></span>
+              <span class="toggle-label">Auto Voice</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Text Input Fallback Bar -->
+        <form id="textQueryForm" class="text-input-form">
+          <div class="input-glow-wrapper">
+            <input type="text" id="inputQueryText" placeholder="Or type your interview question here..." autocomplete="off">
+            <button type="submit" id="btnSendText" class="btn-send" aria-label="Send message">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+        </form>
+
+        <!-- Waveform Audio Visualizer Bar -->
+        <div class="audio-bars" id="audioBars">
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+          <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </div>
+      </section>
+
+      <!-- Right Column: Sample Questions & Conversation Timeline -->
+      <section class="dialogue-panel">
+        <!-- Sample Test Questions Carousel / Grid -->
+        <div class="sample-questions-box">
+          <div class="section-header-compact">
+            <div class="section-title-wrap">
+              <span class="section-icon">🎯</span>
+              <h2 class="section-title">Assignment Test Questions</h2>
+            </div>
+            <span class="sample-tip">1-Click to Test</span>
+          </div>
+
+          <div class="question-chips-grid">
+            <button class="question-card" data-question="What should we know about your life story in a few sentences?">
+              <span class="q-badge">Question 1</span>
+              <p class="q-text">What should we know about your life story in a few sentences?</p>
+              <span class="q-arrow">→</span>
+            </button>
+
+            <button class="question-card" data-question="What’s your #1 superpower?">
+              <span class="q-badge">Question 2</span>
+              <p class="q-text">What’s your #1 superpower?</p>
+              <span class="q-arrow">→</span>
+            </button>
+
+            <button class="question-card" data-question="What are the top 3 areas you’d like to grow in?">
+              <span class="q-badge">Question 3</span>
+              <p class="q-text">What are the top 3 areas you’d like to grow in?</p>
+              <span class="q-arrow">→</span>
+            </button>
+
+            <button class="question-card" data-question="What misconception do your coworkers have about you?">
+              <span class="q-badge">Question 4</span>
+              <p class="q-text">What misconception do your coworkers have about you?</p>
+              <span class="q-arrow">→</span>
+            </button>
+
+            <button class="question-card" data-question="How do you push your boundaries and limits?">
+              <span class="q-badge">Question 5</span>
+              <p class="q-text">How do you push your boundaries and limits?</p>
+              <span class="q-arrow">→</span>
+            </button>
+
+            <button class="question-card question-card-spontaneous" id="btnSpontaneousQ">
+              <span class="q-badge badge-surprise">Random Test</span>
+              <p class="q-text">Ask a spontaneous follow-up challenge</p>
+              <span class="q-arrow">⚡</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Transcript History -->
+        <div class="transcript-container">
+          <div class="transcript-header">
+            <div class="transcript-title-group">
+              <span class="transcript-icon">💬</span>
+              <h3>Conversation Transcript</h3>
+              <span class="transcript-count" id="messageCountBadge">1 message</span>
+            </div>
+            <div class="transcript-actions">
+              <button id="btnCopyTranscript" class="btn-ghost-sm" title="Copy conversation to clipboard">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span>Copy</span>
+              </button>
+              <button id="btnClearTranscript" class="btn-ghost-sm" title="Clear transcript">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                <span>Clear</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="transcript-messages" id="transcriptMessages">
+            <!-- Messages injected dynamically by main.js -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <span>Created for 100x Engineers Evaluation</span>
+        <span class="footer-divider">•</span>
+        <span>Universal Web Speech + Puter.js Zero-Key AI</span>
+      </div>
+      <div class="footer-right">
+        <span class="badge-status-online">
+          <span class="status-pulse"></span>
+          Ready for Review
+        </span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- MODAL 1: Persona & Custom Answers Editor -->
+  <div class="modal-backdrop" id="personaModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">👤</span>
+          <div>
+            <h3>Candidate Persona & Story Editor</h3>
+            <p>Customize the answers your AI Twin speaks when responding to reviewers</p>
+          </div>
+        </div>
+        <button class="modal-close" id="btnClosePersonaModal" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="personaNameInput">Your Name / Candidate Name</label>
+            <input type="text" id="personaNameInput" class="form-control" placeholder="e.g., Anurag">
+          </div>
+          <div class="form-group flex-1">
+            <label for="personaTitleInput">Professional Role / Title</label>
+            <input type="text" id="personaTitleInput" class="form-control" placeholder="e.g., Full-Stack AI Engineer">
+          </div>
+          <div class="form-group flex-1">
+            <label for="personaToneSelect">Speaking Style / Tone</label>
+            <select id="personaToneSelect" class="form-control">
+              <option value="authentic">Authentic, sharp & passionate (Recommended)</option>
+              <option value="concise">Direct, punchy & concise</option>
+              <option value="executive">Strategic, senior leadership & visionary</option>
+              <option value="storyteller">Warm, humble & narrative-driven</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="personaStoryInput">
+            <strong>1. Life Story:</strong> "What should we know about your life story in a few sentences?"
+          </label>
+          <textarea id="personaStoryInput" class="form-control" rows="3" placeholder="Describe your background and what shaped you..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="personaSuperpowerInput">
+            <strong>2. #1 Superpower:</strong> "What’s your #1 superpower?"
+          </label>
+          <textarea id="personaSuperpowerInput" class="form-control" rows="2" placeholder="What is the one thing you excel at more than anyone else?"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="personaGrowthInput">
+            <strong>3. Top 3 Growth Areas:</strong> "What are the top 3 areas you’d like to grow in?"
+          </label>
+          <textarea id="personaGrowthInput" class="form-control" rows="3" placeholder="List the 3 areas where you are actively pushing to level up..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="personaMisconceptionInput">
+            <strong>4. Coworker Misconception:</strong> "What misconception do your coworkers have about you?"
+          </label>
+          <textarea id="personaMisconceptionInput" class="form-control" rows="2" placeholder="What do people sometimes misunderstand about your style or speed?"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="personaLimitsInput">
+            <strong>5. Pushing Boundaries & Limits:</strong> "How do you push your boundaries and limits?"
+          </label>
+          <textarea id="personaLimitsInput" class="form-control" rows="2" placeholder="How do you challenge yourself and overcome friction?"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="personaCustomPrompt">
+            <strong>Custom Persona Instructions:</strong> (Optional tweaks to system prompt)
+          </label>
+          <textarea id="personaCustomPrompt" class="form-control" rows="2" placeholder="e.g. Always answer concisely in 2-3 sentences, speak with enthusiasm..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btnResetPersona" class="btn btn-ghost" type="button">Reset to Defaults</button>
+        <button id="btnExportPersona" class="btn btn-secondary" type="button">Export JSON</button>
+        <button id="btnSavePersona" class="btn btn-primary" type="button">Save Persona</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: Voice & Audio Settings -->
+  <div class="modal-backdrop" id="voiceModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">🔊</span>
+          <div>
+            <h3>Voice & Audio Engine Settings</h3>
+            <p>Tune speech synthesis accents, pitch, speed, and AI provider</p>
+          </div>
+        </div>
+        <button class="modal-close" id="btnCloseVoiceModal" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="voiceSelect">Speech Voice & Accent</label>
+          <select id="voiceSelect" class="form-control">
+            <option value="">Loading voices...</option>
+          </select>
+          <small class="form-hint">Pulls directly from your browser's installed natural neural voices.</small>
+        </div>
+
+        <div class="slider-row">
+          <div class="slider-group flex-1">
+            <div class="slider-header">
+              <label for="rateSlider">Speed / Rate</label>
+              <span id="rateVal">1.0x</span>
+            </div>
+            <input type="range" id="rateSlider" min="0.7" max="1.5" step="0.05" value="1.0">
+          </div>
+
+          <div class="slider-group flex-1">
+            <div class="slider-header">
+              <label for="pitchSlider">Pitch</label>
+              <span id="pitchVal">1.0</span>
+            </div>
+            <input type="range" id="pitchSlider" min="0.8" max="1.3" step="0.05" value="1.0">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="aiModelSelect">AI Brain Backend</label>
+          <select id="aiModelSelect" class="form-control">
+            <option value="auto">Auto-Select (Puter.js + Pollinations Free Fallback)</option>
+            <option value="puter-gpt">Puter.js (GPT-4o-mini)</option>
+            <option value="puter-claude">Puter.js (Claude 3.5)</option>
+            <option value="pollinations">Pollinations Serverless AI (Free CORS)</option>
+            <option value="offline">Smart Semantic Offline Persona Engine</option>
+          </select>
+          <small class="form-hint">Evaluators never need to sign up or input any API key.</small>
+        </div>
+
+        <div class="toggle-group-setting">
+          <label class="setting-toggle">
+            <input type="checkbox" id="chkSoundFx" checked>
+            <span>Play Interaction Sound Chimes</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btnTestVoice" class="btn btn-secondary" type="button">Test Voice Sample</button>
+        <button id="btnSaveVoiceSettings" class="btn btn-primary" type="button">Apply Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: Instructions & Evaluator Guide -->
+  <div class="modal-backdrop" id="infoModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">💡</span>
+          <div>
+            <h3>Submission & Evaluation Guide</h3>
+            <p>100x Engineers Voice Bot Assignment</p>
+          </div>
+        </div>
+        <button class="modal-close" id="btnCloseInfoModal" aria-label="Close">&times;</button>
+      </div>
+
+      <div class="modal-body guide-content">
+        <h4>🚀 Universal Zero-Setup Architecture</h4>
+        <p>This voice bot was architected to be <strong>100% user-friendly for non-technical evaluators</strong>:</p>
+        <ul>
+          <li><strong>No API Keys:</strong> Operates using zero-configuration browser-native AI (Puter.js) backed by high-speed serverless fallback endpoints.</li>
+          <li><strong>Real Voice Input & Output:</strong> Uses the Web Speech API (SpeechRecognition + SpeechSynthesis) with zero latency audio streams.</li>
+          <li><strong>Live Dynamic Persona:</strong> Speaks in the 1st person ("I") representing the candidate, accurately addressing all core questions and unpredictable follow-ups.</li>
+          <li><strong>Editable On-the-Fly:</strong> The candidate or reviewer can open "Persona Settings" to view or modify answers in real time.</li>
+        </ul>
+
+        <h4>🎙️ How to Test:</h4>
+        <ol>
+          <li>Click the circular glowing <strong>Microphone Button</strong> and grant microphone permission when prompted.</li>
+          <li>Speak your question naturally (or click any of the <strong>5 Question Cards</strong>).</li>
+          <li>The bot will stream the transcript, think, and speak back the answer with animated sound waves!</li>
+        </ol>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="btnCloseInfoModalBtn" type="button">Got it!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Chimes Synthesis & Scripts -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
